@@ -2,11 +2,10 @@
 #include <cmath>
 class Perlin
 {
-	unsigned int _x = 0;
 public:
-	Perlin(unsigned int seed_);
-	int _rand();
-	float* noise1d(unsigned int count_, float *seed_, int octav);
-
+	float *generate1d(unsigned int size_);
+	float *generate2d(unsigned int sizex_, unsigned int sizey_);
+	float *noise1d(unsigned int count_, float *seed_, int octav, float bias);
+	float *noise2d(unsigned int countX_, unsigned int countY_, float *seed_, int octav, float bias);
 };
 
