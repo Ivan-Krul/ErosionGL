@@ -36,11 +36,12 @@ RGB Tile::torgb()
 {
     RGB col = {0,0,0};
     // задання скелі
-    col = (_cliffcol - _maincol) / 256 * _cliff + _maincol;
-
+    col.r = float(_cliffcol.r - _maincol.r) / 256.0f * _cliff + _maincol.r;
+    col.g = float(_cliffcol.g - _maincol.g) / 256.0f * _cliff + _maincol.g;
+    col.b = float(_cliffcol.b - _maincol.b) / 256.0f * _cliff + _maincol.b;
     // градієнт висоти
-    col.r *= (_height / 256);
-    col.g *= (_height / 256);
-    col.b *= (_height / 256);
+    col.r = float(_height) / 256.0f * float(col.r);
+    col.g = float(_height) / 256.0f * float(col.g);
+    col.b = float(_height) / 256.0f * float(col.b);
     return col;
 }

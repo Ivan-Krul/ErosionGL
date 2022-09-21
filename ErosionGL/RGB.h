@@ -49,6 +49,9 @@ struct RGB
 	}
 	RGB operator/(RGB other_)
 	{
+		if(other_.r == 0) other_.r++;
+		if(other_.g == 0) other_.g++;
+		if(other_.b == 0) other_.b++;
 		r /= other_.r;
 		g /= other_.g;
 		b /= other_.b;
@@ -84,6 +87,7 @@ struct RGB
 	}
 	RGB operator/(unsigned char other_)
 	{
+		if(other_ == 0) other_++;
 		r /= other_;
 		g /= other_;
 		b /= other_;
