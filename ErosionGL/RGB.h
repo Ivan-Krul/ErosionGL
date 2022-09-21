@@ -3,7 +3,7 @@
 struct RGB
 {
 	unsigned char r, g, b;
-	void operator= (std::initializer_list<unsigned char> inilist_)
+	RGB operator= (std::initializer_list<unsigned char> inilist_)
 	{
 		int i = 0;
 		for(const unsigned char *iter = inilist_.begin(); iter != inilist_.end(); iter++)
@@ -17,36 +17,77 @@ struct RGB
 			}
 			i++;
 		}
+		return *this;
 	}
-	void operator=(RGB other_)
+	RGB operator=(RGB other_)
 	{
 		r = other_.r;
 		g = other_.g;
 		b = other_.b;
+		return *this;
 	}
-	void operator+(RGB other_)
+	RGB operator+(RGB other_)
 	{
 		r += other_.r;
 		g += other_.g;
 		b += other_.b;
+		return *this;
 	}
-	void operator-(RGB other_)
+	RGB operator-(RGB other_)
 	{
 		r -= other_.r;
 		g -= other_.g;
 		b -= other_.b;
+		return *this;
 	}
-	void operator*(RGB other_)
+	RGB operator*(RGB other_)
 	{
 		r *= other_.r;
 		g *= other_.g;
 		b *= other_.b;
+		return *this;
 	}
-	void operator/(RGB other_)
+	RGB operator/(RGB other_)
 	{
 		r /= other_.r;
 		g /= other_.g;
 		b /= other_.b;
+		return *this;
+	}
+	RGB operator=(unsigned char other_)
+	{
+		r = other_;
+		g = other_;
+		b = other_;
+		return *this;
+	}
+	RGB operator+(unsigned char other_)
+	{
+		r += other_;
+		g += other_;
+		b += other_;
+		return *this;
+	}
+	RGB operator-(unsigned char other_)
+	{
+		r -= other_;
+		g -= other_;
+		b -= other_;
+		return *this;
+	}
+	RGB operator*(unsigned char other_)
+	{
+		r *= other_;
+		g *= other_;
+		b *= other_;
+		return *this;
+	}
+	RGB operator/(unsigned char other_)
+	{
+		r /= other_;
+		g /= other_;
+		b /= other_;
+		return *this;
 	}
 };
 

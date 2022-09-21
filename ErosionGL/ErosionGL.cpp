@@ -9,7 +9,7 @@ int main()
     Perlin p;
     srand(time(NULL));
     float *ar = p.generate2d(size, size);
-    float *arr = p.noise2d(size, size, ar, 8,1.5);
+    float *arr = p.noise2d(size, size, ar, 8,2.0);
 
     FilePPM ppm(size, size);
     for(int x = 0; x < size; x++)
