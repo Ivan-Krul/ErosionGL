@@ -12,6 +12,17 @@ Tile::Tile(RGB maincol_, RGB cliffcol_)
     _cliffcol = cliffcol_;
 }
 
+void Tile::generatecliff(float *tile_, unsigned char size_)
+{
+    const float multiply = 0.75;
+    float avrg = 0;
+    for(int i = 0; i < size_; i++)
+        avrg += tile_[i];
+    avrg /= size_;
+    avrg *= 256;
+    _cliff = abs(int(avrg) - int(_height));
+}
+
 unsigned char &Tile::height()
 {
     return _height;
