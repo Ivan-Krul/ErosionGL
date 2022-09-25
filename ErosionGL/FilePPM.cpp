@@ -53,8 +53,9 @@ void FilePPM::save_e(std::string dir_)
 {
 	std::ofstream fout;
 	fout.open(dir_, std::ios::out | std::ios::binary);
-	fout << "P3 E\n";
+	fout << "P3\n";
 	fout << _x << ' ' << _y << '\n';
+	fout << 255 << '\n';
 
 	for(int i = 0; i < _pic.size(); i++)
 		fout << _pic[i].r << _pic[i].g << _pic[i].b;

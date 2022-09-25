@@ -34,6 +34,8 @@ int main()
                     }
             tile[x + y * size].generatecliff(buf,sizee);
             tile[x + y * size].height() = arr[x + y * size] * 256;
+            if(rand()%16 == 0)
+                tile[x + y * size].water() = rand()%16;
             ppm.dot(x, y) = tile[x + y * size].torgb();
             delete[] buf;
         }
