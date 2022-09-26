@@ -129,11 +129,13 @@
   <ItemGroup>
     <ClCompile Include="ErosionGL.cpp" />
     <ClCompile Include="FilePPM.cpp" />
+    <ClCompile Include="MapTile.cpp" />
     <ClCompile Include="Perlin.cpp" />
     <ClCompile Include="Tile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FilePPM.h" />
+    <ClInclude Include="MapTile.h" />
     <ClInclude Include="Perlin.h" />
     <ClInclude Include="RGB.h" />
     <ClInclude Include="Tile.h" />
