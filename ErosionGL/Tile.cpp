@@ -1,11 +1,11 @@
 #include "Tile.h"
 
-Tile::Tile(unsigned char height_)
+Tile::Tile(byte height_)
 {
 	_height = height_;
 }
 
-Tile::Tile(unsigned char height_, unsigned char water_)
+Tile::Tile(byte height_, byte water_)
 {
 	_height = height_;
 	_water = water_;
@@ -17,37 +17,30 @@ Tile::Tile(RGB maincol_, RGB cliffcol_)
 	_cliffcol = cliffcol_;
 }
 
-void Tile::generatecliff(float *tile_, unsigned char size_)
+void Tile::generatecliff(byte *tile_, byte size_)
 {
-	const float multiply = 0.75;
-	float avrg = 0;
+	short avrg = 0;
 	for(int i = 0; i < size_; i++)
 		avrg += tile_[i];
-	avrg /= size_;
-	avrg *= 256;
-	_cliff = abs(int(avrg) - int(_height));
+	_cliff = abs(avrg / size_ * 2 - _height);
 }
 
-// спершу шукаємо найнижчу сумарну висоту,...
-// потім, після того, як визначили тайл з мілімальною сумарною висотою...
-// наливаємо стільки, щоб у 2 тайлів було середнє значення сумарних висот
-
-unsigned char &Tile::height()
+Tile::byte &Tile::height()
 {
 	return _height;
 }
 
-unsigned char &Tile::cliff()
+Tile::byte &Tile::cliff()
 {
 	return _cliff;
 }
 
-unsigned char &Tile::water()
+Tile::byte &Tile::water()
 {
 	return _water;
 }
 
-unsigned int Tile::sumheight()
+unsigned short Tile::sumheight()
 {
 	return _height + _water;
 }
@@ -64,15 +57,12 @@ RGB Tile::cliffcol()
 
 RGB Tile::torgb()
 {
-	RGB col = {0,0,0};
+	RGB col = { 0,0,0 };
 	// задання скелі чи додавання води
-	if(_water == 0)
-	{
-		col.r = float(_cliffcol.r - _maincol.r) / 256.0f * _cliff + _maincol.r;
-		col.g = float(_cliffcol.g - _maincol.g) / 256.0f * _cliff + _maincol.g;
-		col.b = float(_cliffcol.b - _maincol.b) / 256.0f * _cliff + _maincol.b;
-	}
-	else
+	col.r = float(_cliffcol.r - _maincol.r) / 256.0f * _cliff + _maincol.r;
+	col.g = float(_cliffcol.g - _maincol.g) / 256.0f * _cliff + _maincol.g;
+	col.b = float(_cliffcol.b - _maincol.b) / 256.0f * _cliff + _maincol.b;
+	if(_water != 0)
 	{
 		col.r = float(_watercol.r - col.r) / 256.0f * _water + col.r;
 		col.g = float(_watercol.g - col.g) / 256.0f * _water + col.g;

@@ -4,22 +4,25 @@
 #include <algorithm>
 class Tile
 {
-	RGB _maincol = { 29, 196, 74 };
-	RGB _cliffcol = { 237, 245, 122 };
+	typedef unsigned char byte;
+	//RGB _maincol = { 29, 196, 74 };
+	//RGB _cliffcol = { 237, 245, 122 };
+	RGB _maincol = { 0, 255, 0 };
+	RGB _cliffcol = { 0, 255, 0 };
 	RGB _watercol = { 0, 0, 255 };
-	unsigned char _height = 0;
-	unsigned char _cliff = 0;
-	unsigned char _water = 0;
+	byte _height = 0;
+	byte _cliff = 0;
+	byte _water = 0;
 public:
 	Tile() = default;
-	Tile(unsigned char height_);
-	Tile(unsigned char height_, unsigned char water_);
+	Tile(byte height_);
+	Tile(byte height_, byte water_);
 	Tile(RGB maincol_, RGB cliffcol_);
-	void generatecliff(float *tile_, unsigned char size_);
-	unsigned char &height();
-	unsigned char &cliff();
-	unsigned char &water();
-	unsigned int sumheight();
+	void generatecliff(byte *tile_, byte size_);
+	byte &height();
+	byte &cliff();
+	byte &water();
+	unsigned short sumheight();
 	RGB maincol();
 	RGB cliffcol();
 	RGB torgb();

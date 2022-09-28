@@ -1,46 +1,105 @@
 #include <iostream>
+#include <chrono>
 #include "FilePPM.h"
 #include "Perlin.h"
 #include "Tile.h"
-
+#include "MapTile.h"
 int main()
 {
-	int size = 512;
+	//auto beg = std::chrono::system_clock::now(), end = std::chrono::system_clock::now();
+	int size = 8;
+	//Perlin p;
+	//srand(0);
+
+	//beg = std::chrono::system_clock::now();
+	//float *ar = p.generate2d(size, size);
+	//float *arr = p.noise2d(size, size, ar, 10, 1.5);
+	//end = std::chrono::system_clock::now();
+	//std::cout << "Generation: " <<(float)std::chrono::duration_cast<std::chrono::microseconds>(end-beg).count()/1000.0f << "ms\n";
+
+	//MapTile m(size, size);
+
+	//beg = std::chrono::system_clock::now();
+	//m.updateheight(arr, size * size);
+	//delete[] arr;
+	//end = std::chrono::system_clock::now();
+	//std::cout << "Update height: " << (float)std::chrono::duration_cast<std::chrono::microseconds>(end - beg).count() / 1000.0f << "ms\n";
+
+	//beg = std::chrono::system_clock::now();
+	//m.updatecliff();
+	//end = std::chrono::system_clock::now();
+	//std::cout << "Update cliff: " << (float)std::chrono::duration_cast<std::chrono::microseconds>(end - beg).count() / 1000.0f << "ms\n";
+
+	//for(int x = 0; x < size; x++)
+	//	for(int y = 0; y < size; y++)
+	//		m[x + y * size].water() = rand()%256 * 16;
+
+	//FilePPM ppm(size, size);
+	//beg = std::chrono::system_clock::now();
+	//for(int x = 0; x < size; x++)
+	//	for(int y = 0; y < size; y++)
+	//	{
+	//		ppm.dot(x, y) = m[x + y * size].torgb();
+	//	}
+	//ppm.save("before.ppm");
+
+	//int iter = 100;
+
+	//for(int i = 0; i < iter; i++)
+	//{
+	//	beg = std::chrono::system_clock::now();
+	//	m.updateonedirwater();
+	//	end = std::chrono::system_clock::now();
+	//	std::cout << "Update water: " << (float)std::chrono::duration_cast<std::chrono::microseconds>(end - beg).count() / 1000.0f << "ms x" << i << "\n";
+	//}
+	//	
+	//beg = std::chrono::system_clock::now();
+	//for(int x = 0; x < size; x++)
+	//	for(int y = 0; y < size; y++)
+	//	{
+	//		ppm.dot(x, y) = m[x+y*size].torgb();
+	//	}
+	//ppm.save("after.ppm");
+	//end = std::chrono::system_clock::now();
+	//std::cout << "Update picture: " << (float)std::chrono::duration_cast<std::chrono::microseconds>(end - beg).count() / 1000.0f << "ms\n";
+
+	int mult = 4;
 	Perlin p;
 	srand(0);
-	float *ar = p.generate2d(size, size);
-	float *arr = p.noise2d(size, size, ar, 8,1.25);
-	Tile *tile = new Tile[size*size];
-	float *buf;
-
-	FilePPM ppm(size, size);
-	for(int x = 0; x < size; x++)
-		for(int y = 0; y < size; y++)
-		{
-			int sizee = 0;
-			for(int dx = -1; dx < 2; dx++)
-				for(int dy = -1; dy < 2; dy++)
-					if(0 <= (dx + x) && (dx + x) < size && 0 <= (dy + y) && (dy + y) < size)
-						sizee++;
-			buf = new float[sizee];
-			int a = 0;
-			for(int dx = -1; dx < 2; dx++)
-				for(int dy = -1; dy < 2; dy++)
-					if(0 <= (dx + x) && (dx + x) < size && 0 <= (dy + y) && (dy + y) < size)
-					{
-						if(!(a < sizee)) break;
-						buf[a] = arr[(x + dx) + (y + dy) * size];
-						a++;
-					}
-			tile[x + y * size].generatecliff(buf,sizee);
-			tile[x + y * size].height() = arr[x + y * size] * 256;
-			if(rand()%16 == 0)
-				tile[x + y * size].water() = rand()%16;
-			ppm.dot(x, y) = tile[x + y * size].torgb();
-			delete[] buf;
-		}
-	ppm.save("2d.ppm");
+	float *ar = p.generate1d(size);
+	float *arr = p.noise1d(size, ar, 2, 1.5);
+	MapTile m(size, 1);
+	m.updateheight(arr, size);
 	delete[] arr;
-	delete[] tile;
+
+	for(int x = 0; x < size; x++)
+			m[x].water() = rand() % 256;
+
+	for(int i = 0; i < size; i++)
+	{
+		for(int j = 0; j < m[i].height() / mult; j++)
+		{
+			std::cout << '#';
+		}
+		for(int j = 0; j < m[i].water() / mult; j++)
+		{
+			std::cout << '*';
+		}
+		std::cout << '\n';
+	}
+	std::cout << '\n';
+	m.updateonedirwater();
+	for(int i = 0; i < size; i++)
+	{
+		for(int j = 0; j < m[i].height() / mult; j++)
+		{
+			std::cout << '#';
+		}
+		for(int j = 0; j < m[i].water() / mult; j++)
+		{
+			std::cout << '*';
+		}
+		std::cout << '\n';
+	}
 	return 0;
 }
